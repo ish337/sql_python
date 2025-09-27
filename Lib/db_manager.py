@@ -22,9 +22,18 @@ def create_user(cursor, conn):
     last_id = cursor.fetchone()
     print("Inserted row ID:", last_id)
 
+# DELETE FROM myTable WHERE myTableID = 2007;
+# SELECT * FROM myTable WHERE myTableID = 2007;
+
+def delete_user(cursor, conn):
+    myTableID=int(input("Enter ID to remove: "))
+    SQL_QUERY = f"DELETE FROM myTable WHERE myTableID = ?"
+    removed_row_querry = f"SELECT * FROM myTable WHERE myTableID = ?"
+    cursor.execute(removed_row_querry, myTableID)
+    removed_row = cursor.fetchone()
+    cursor.execute(SQL_QUERY, myTableID)
     conn.commit()
-
-
+    print (f"Successfully removed row: {removed_row}")
 
 
 
