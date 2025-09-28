@@ -12,8 +12,8 @@ cursor = conn.cursor()
 
 # select_all(cursor)
 # create_user(cursor, conn)
-# delete_user(cursor, conn)
-update_user(cursor, conn)
+delete_user(cursor, conn)
+# update_user(cursor, conn)
 
 cursor.close()
 conn.close()

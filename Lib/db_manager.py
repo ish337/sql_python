@@ -4,7 +4,13 @@ def select_all(cursor):
 
     records = cursor.fetchall()
     for row in records:
-        print(row)
+        printf(row)
+
+def select_id(cursor, conn, myTableID):
+    row_querry = f"SELECT * FROM myTable WHERE myTableID = ?"
+    cursor.execute(row_querry, myTableID)
+    row = cursor.fetchone()
+    return row
 
 def create_user(cursor, conn):
     name = input("Enter person's name: ")
@@ -28,12 +34,10 @@ def create_user(cursor, conn):
 def delete_user(cursor, conn):
     myTableID=int(input("Enter ID to remove: "))
     SQL_QUERY = f"DELETE FROM myTable WHERE myTableID = ?"
-    removed_row_querry = f"SELECT * FROM myTable WHERE myTableID = ?"
-    cursor.execute(removed_row_querry, myTableID)
-    removed_row = cursor.fetchone()
+    row = select_id(cursor, conn, myTableID)
     cursor.execute(SQL_QUERY, myTableID)
     conn.commit()
-    print (f"Successfully removed row: {removed_row}")
+    print (f"Successfully removed row: {row}")
 
 # UPDATE myTable SET [name]= 'value1', surname = 'value2', email = 'value3', country= 'value4', city = 'value5', salary = 8888, cvv = 111 WHERE myTableID = 2003;
 
@@ -75,10 +79,13 @@ def update_user(cursor, conn):
     SQL_QUERY = SQL_QUERY.rstrip(", ")
     SQL_QUERY += " WHERE myTableID = ?"
     val.append(myTableID)
-    print (SQL_QUERY)
     cursor.execute(SQL_QUERY, val)
     conn.commit()
-    
+    row = select_id(cursor, conn, myTableID)
+    print (f"Was affected next row: {row}")
+
+def select_user():
+    pass
 
 # Create user
 # Delete user
