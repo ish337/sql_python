@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 import pyodbc
-from Lib.db_manager import select_all, create_user, delete_user, update_user
+from Lib.db_manager import select_all, create_user, delete_user, update_user, select_user
 
 load_dotenv(override=True)
 
@@ -12,8 +12,9 @@ cursor = conn.cursor()
 
 # select_all(cursor)
 # create_user(cursor, conn)
-delete_user(cursor, conn)
+# delete_user(cursor, conn)
 # update_user(cursor, conn)
+select_user(cursor, conn)
 
 cursor.close()
 conn.close()

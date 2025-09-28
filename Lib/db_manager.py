@@ -4,7 +4,7 @@ def select_all(cursor):
 
     records = cursor.fetchall()
     for row in records:
-        printf(row)
+        print(row)
 
 def select_id(cursor, conn, myTableID):
     row_querry = f"SELECT * FROM myTable WHERE myTableID = ?"
@@ -43,7 +43,7 @@ def delete_user(cursor, conn):
 
 def update_user(cursor, conn):
     myTableID=int(input("Enter ID to update: "))
-    choice = input((f"Select fields to update(for choice multipleuse spaces)\n1. name\n2. surname\n3. email\n4. country\n5. city\n6. salary\n7. cvv\n-> "))
+    choice = input((f"Select fields to update(for choice multiple use spaces)\n1. name\n2. surname\n3. email\n4. country\n5. city\n6. salary\n7. cvv\n-> "))
     choice = choice.split()
     SQL_QUERY = f"UPDATE myTable SET "
     val = []
@@ -84,8 +84,49 @@ def update_user(cursor, conn):
     row = select_id(cursor, conn, myTableID)
     print (f"Was affected next row: {row}")
 
-def select_user():
-    pass
+def select_user(cursor, conn):
+    choice = input((f"Search by(for choice multiple use spaces)\n1. name\n2. surname\n3. email\n4. country\n5. city\n6. salary\n7. cvv\n8. ID\n-> "))
+    choice = choice.split()
+    SQL_QUERY = f"SELECT * FROM myTable WHERE "
+    val = []
+    for i in range(len(choice)):
+        if choice[i] == '1':
+            name = input("Enter name: ")
+            SQL_QUERY = SQL_QUERY + "[name]= ? AND "
+            val.append(name)
+        elif choice[i] == '2':
+            surname = input("Enter surname: ")
+            SQL_QUERY = SQL_QUERY + "surname= ? AND "
+            val.append(surname)
+        elif choice[i] == '3':
+            email = input("Enter email: ")
+            SQL_QUERY = SQL_QUERY + "email= ? AND "
+            val.append(email)
+        elif choice[i] == '4':
+            country = input("Enter country: ")
+            SQL_QUERY = SQL_QUERY + "country= ? AND "
+            val.append(country)
+        elif choice[i] == '5':
+            city = input("Enter city: ")
+            SQL_QUERY = SQL_QUERY + "city= ? AND "
+            val.append(city)
+        elif choice[i] == '6':
+            salary = int(input("Enter salary: "))
+            SQL_QUERY = SQL_QUERY + "salary= ? AND "
+            val.append(salary)
+        elif choice[i] == '7':
+            cvv = int(input("Enter cvv: "))
+            SQL_QUERY = SQL_QUERY + "cvv= ? AND "
+            val.append(cvv)
+        elif choice[i] == '8':
+            myTableID = int(input("Enter myTableID: "))
+            SQL_QUERY = SQL_QUERY + "myTableID= ? AND "
+            val.append(myTableID)
+    SQL_QUERY = SQL_QUERY.rstrip(" AND ")
+    cursor.execute(SQL_QUERY, val)
+    records = cursor.fetchall()
+    for row in records:
+        print(row)
 
 # Create user
 # Delete user
