@@ -1,5 +1,5 @@
 def select_all(cursor):
-    SQL_QUERY = "SELECT * FROM myTable;"
+    SQL_QUERY = "SELECT * FROM myTable ORDER BY myTableID;"
     cursor.execute(SQL_QUERY)
 
     records = cursor.fetchall()
@@ -127,6 +127,27 @@ def select_user(cursor, conn):
     records = cursor.fetchall()
     for row in records:
         print(row)
+
+def menu(cursor, conn):
+    while True:
+        print(f"--------------------------CHOICE OPTION--------------------------")
+        print(f"1. Select all\n2. Create user\n3. Delete user\n4. Update user\n5. Select user\n6. Exit")
+        choice = int(input("Enter option: "))
+        if choice == 1:
+            select_all(cursor)
+        elif choice == 2:
+            create_user(cursor, conn)
+        elif choice == 3:
+            delete_user(cursor, conn)
+        elif choice == 4:
+            update_user(cursor, conn)  
+        elif choice == 5:
+            select_user(cursor, conn)
+        elif choice == 6:
+            break
+        else:
+            print("Wrong option")  
+
 
 # Create user
 # Delete user
