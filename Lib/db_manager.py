@@ -35,7 +35,50 @@ def delete_user(cursor, conn):
     conn.commit()
     print (f"Successfully removed row: {removed_row}")
 
+# UPDATE myTable SET [name]= 'value1', surname = 'value2', email = 'value3', country= 'value4', city = 'value5', salary = 8888, cvv = 111 WHERE myTableID = 2003;
 
+def update_user(cursor, conn):
+    myTableID=int(input("Enter ID to update: "))
+    choice = input((f"Select fields to update(for choice multipleuse spaces)\n1. name\n2. surname\n3. email\n4. country\n5. city\n6. salary\n7. cvv\n-> "))
+    choice = choice.split()
+    SQL_QUERY = f"UPDATE myTable SET "
+    val = []
+    for i in range(len(choice)):
+        if choice[i] == '1':
+            name = input("Enter new name: ")
+            SQL_QUERY = SQL_QUERY + "[name]= ?, "
+            val.append(name)
+        elif choice[i] == '2':
+            surname = input("Enter new surname: ")
+            SQL_QUERY = SQL_QUERY + "surname= ?, "
+            val.append(surname)
+        elif choice[i] == '3':
+            email = input("Enter new email: ")
+            SQL_QUERY = SQL_QUERY + "email= ?, "
+            val.append(email)
+        elif choice[i] == '4':
+            country = input("Enter new country: ")
+            SQL_QUERY = SQL_QUERY + "country= ?, "
+            val.append(country)
+        elif choice[i] == '5':
+            city = input("Enter new city: ")
+            SQL_QUERY = SQL_QUERY + "city= ?, "
+            val.append(city)
+        elif choice[i] == '6':
+            salary = int(input("Enter new salary: "))
+            SQL_QUERY = SQL_QUERY + "salary= ?, "
+            val.append(salary)
+        elif choice[i] == '7':
+            cvv = int(input("Enter new cvv: "))
+            SQL_QUERY = SQL_QUERY + "cvv= ?, "
+            val.append(cvv)
+    SQL_QUERY = SQL_QUERY.rstrip(", ")
+    SQL_QUERY += " WHERE myTableID = ?"
+    val.append(myTableID)
+    print (SQL_QUERY)
+    cursor.execute(SQL_QUERY, val)
+    conn.commit()
+    
 
 # Create user
 # Delete user
